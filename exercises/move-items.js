@@ -12,7 +12,7 @@
  */
 
 // Your code goes here...
-
+ const allItems = document.querySelectorAll('.item');
 
 
 /**
@@ -23,7 +23,7 @@
  * */
 
 // Your code goes here
-
+const main = document.getElementById('main');
 
 
 /**
@@ -35,7 +35,7 @@
 
 // Your code goes here
 
-
+const favs = document.getElementById('favs');
 
 /**
  * @task
@@ -47,9 +47,24 @@
  */
 
 // Your code goes here
+function updateCollections(id, direction) {
+    const item = document.getElementById(id);
+    if(direction === 'toMain'){
+      main.appendChild(item);
+    }else if(direction === 'toFavs'){
+      favs.appendChild(item);
+    }
 
-
-
+    const icon = item.querySelector('i');
+    if(direction === 'toMain'){
+      icon.classList.remove('fa-heart-crack');
+      icon.classList.add('fa-heart-circle-plus');
+    }else if(direction === 'toFavs'){
+      icon.classList.remove('fa-heart-circle-plus');
+      icon.classList.add('fa-heart-crack');
+    }
+  }
+  
 /**
  * @task
  * Iterate through the every item in allItems NodeList and apply the
@@ -67,3 +82,18 @@
 // Your code goes here...
 
 
+allItems.forEach((item) =>{
+  item.addEventListener('click', () =>{
+    const parentId = item.parentNode.id;
+    const itemId = parseInt(item.id);
+    let direction;
+    if(parentId === 'main'){
+      direction = 'toFavs';
+    }else if(parentId === 'favs'){
+      direction = 'toMain';
+    }
+
+   updateCollections(itemId, direction); 
+  }); 
+});
+   

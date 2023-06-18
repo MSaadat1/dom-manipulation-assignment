@@ -37,4 +37,36 @@
  * * add the event listener to the container, pass the callback.
  */
 
+const container = document.querySelector('.cardsContainer');
+const items = container.getElementsByClassName('card');
+
+const callbackFn = (e) => {
+    const item = e.target;
+    if (Array.from(item.classList).includes('card')) {
+      if (item.style.backgroundColor === 'white') {
+        item.style.backgroundColor = 'red';
+      } else {
+        item.style.backgroundColor = 'white';
+      }
+      const data = {
+        items: Array.from(items).map((item) => item.style.backgroundColor),
+      };
+      localStorage.setItem('favorites', JSON.stringify(data));
+    }
+  };
+  
+  
+  container.addEventListener('click', callbackFn);
+  
+  const storageData = localStorage.getItem('favorites');
+  if (storageData) {
+    const storedData = JSON.parse(storageData);
+    const storedColors = storedData.items;
+  
+    // Apply the stored background colors to the items
+    Array.from(items).forEach((item, index) => {
+      item.style.backgroundColor = storedColors[index];
+    });
+  }
+
 // Your code goes here...
